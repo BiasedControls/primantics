@@ -73,12 +73,12 @@ fetch.packman_target_files_to_pull = [
 
 [repo_build.build]
 enabled = true
-"platform:windows-x86_64".enabled = false
+"platform:windows-x86_64".enabled = true
 
 [repo_build.msbuild]
 # If set to true will attempt to link to host's Visual Studio and Windows SDK installations.
 # This is needed if C++ compilation is needed on Windows, and repo_build.build.enabled is set to true.
-link_host_toolchain = false
+link_host_toolchain = true
 
 # Filter on Visual Studio version e.g.: Visual Studio 2022. Empty string will match all years and prioritize the newest.
 vs_version = "vs2022"
