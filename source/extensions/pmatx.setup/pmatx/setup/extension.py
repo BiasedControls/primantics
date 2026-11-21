@@ -52,6 +52,7 @@ async def _load_layout(layout_file: str, keep_windows_open=False):
 
 class CreateSetupExtension(omni.ext.IExt):
     """Create Final Configuration"""
+
     def on_startup(self, _ext_id):
         """
         setup the window layout, menu, final configuration
@@ -96,23 +97,8 @@ class CreateSetupExtension(omni.ext.IExt):
 
             asyncio.ensure_future(_toggle_present(self._settings))
 
-        # Setting and Saving FSD as a global change in preferences
-        # Requires to listen for changes at the local path to update
-        # Composer's persistent path.
-        fabric_app_setting = self._settings.get("/app/useFabricSceneDelegate")
-        fabric_persistent_setting = self._settings.get(
-            "/persistent/app/useFabricSceneDelegate"
-        )
-        fabric_enabled: bool = fabric_app_setting if \
-            fabric_persistent_setting is None else fabric_persistent_setting
-
-        self._settings.set("/app/useFabricSceneDelegate", fabric_enabled)
-
-        self._sub_fabric_delegate_changed = \
-            omni.kit.app.SettingChangeSubscription(
-                "/app/useFabricSceneDelegate",
-                self._on_fabric_delegate_changed
-            )
+        self._settings.set("persistent/app/useFabricSceneDelegate", True)
+        self._settings.set("app/useFabricSceneDelegate", True)
 
         # Adjust the Window Title to show the Create Version
         window_title = get_main_window_title()
@@ -176,19 +162,6 @@ class CreateSetupExtension(omni.ext.IExt):
             "/crashreporter/data/startup_time", f"{startup_time}"
         )
 
-        def show_documentation(*args):
-            webbrowser.open(
-                "https://docs.omniverse.nvidia.com/composer/latest/index.html"
-            )
-        self._help_menu_items = [
-            MenuItemDescription(
-                name="Documentation",
-                onclick_fn=show_documentation,
-                appear_after=[omni.kit.menu.utils.MenuItemOrder.FIRST]
-            )
-        ]
-        omni.kit.menu.utils.add_menu_items(self._help_menu_items, name="Help")
-
     def _set_defaults(self):
         """
         This is trying to setup some defaults for extensions to avoid warnings.
@@ -238,16 +211,6 @@ class CreateSetupExtension(omni.ext.IExt):
             "/rtx/sceneDb/ambientLightIntensity", 0.0
         )  # set default ambientLight intensity to Zero
 
-    def _on_fabric_delegate_changed(
-            self, _v: str, event_type: carb.settings.ChangeEventType):
-        if event_type == carb.settings.ChangeEventType.CHANGED:
-            enabled: bool = self._settings.get_as_bool(
-                "/app/useFabricSceneDelegate"
-            )
-            self._settings.set(
-                "/persistent/app/useFabricSceneDelegate", enabled
-            )
-
     async def __new_stage(self):
         """Create a new stage """
         # 5 frame delay to allow Layout
@@ -256,51 +219,6 @@ class CreateSetupExtension(omni.ext.IExt):
 
         if omni.usd.get_context().can_open_stage() and not omni.usd.get_context().get_stage_url():
             stage_templates.new_stage(template=None)
-
-    def _launch_app(self, app_id, console=True, custom_args=None):
-        """launch another Kit app with the same settings"""
-        app_path = carb.tokens.get_tokens_interface().resolve("${app}")
-        kit_file_path = os.path.join(app_path, app_id)
-
-        # https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-        # Validate input from command line (detected in static analysis)
-        kit_exe = sys.argv[0]
-        if not os.path.exists(kit_exe):
-            print(f"cannot find executable{kit_exe}")
-            return
-
-        launch_args = [kit_exe]
-        launch_args += [kit_file_path]
-        if custom_args:
-            launch_args.extend(custom_args)
-
-        # Pass all exts folders
-        exts_folders = self._settings.get("/app/exts/folders")
-        if exts_folders:
-            for folder in exts_folders:
-                launch_args.extend(["--ext-folder", folder])
-
-        kwargs = {"close_fds": False}
-        if platform.system().lower() == "windows":
-            if console:
-                kwargs["creationflags"] = subprocess.CREATE_NEW_CONSOLE | \
-                    subprocess.CREATE_NEW_PROCESS_GROUP
-            else:
-                kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
-
-        subprocess.Popen(launch_args, **kwargs)
-
-    def _show_ui_docs(self):
-        """show the omniverse ui documentation as an external Application"""
-        self._launch_app("omni.app.uidoc.kit")
-
-    def _show_launcher(self):
-        """show the omniverse ui documentation as an external Application"""
-        self._launch_app(
-            "omni.create.launcher.kit",
-            console=False,
-            custom_args={"--/app/auto_launch=false"}
-        )
 
     async def __property_window(self):
         """Creates a propety window and sets column sizes."""
@@ -461,8 +379,6 @@ class CreateSetupExtension(omni.ext.IExt):
 
     def on_shutdown(self):
         """Clean up the extension"""
-        self._sub_fabric_delegate_changed = None
-
         omni.kit.menu.utils.remove_layout(self._menu_layout)
         self._menu_layout = None
 

@@ -27,7 +27,7 @@ repository = "https://github.com/NVIDIA-Omniverse/kit-app-template"  # URL of th
 "omni.kit.property.usd" = {}
 "omni.kit.quicklayout" = {}
 "omni.kit.stage_templates" = {}
-"omni.kit.viewport.menubar.lighting" = { optional = true }
+"omni.kit.viewport.menubar.lighting" = {}
 "omni.kit.window.property" = {}
 "omni.kit.window.title" = {}
 "omni.ui" = {}
@@ -39,7 +39,6 @@ legacy_mode = false
 
 
 [settings.exts."omni.kit.viewport.menubar.lighting"]
-rigs = "${pmatx.setup}/data/light_rigs"
 defaultRig = "Default"
 
 
