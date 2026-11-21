@@ -32,6 +32,14 @@ from omni.kit.menu.utils import MenuLayout, MenuItemDescription
 from omni.kit.property.usd import PrimPathWidget
 from omni.kit.quicklayout import QuickLayout
 from omni.kit.window.title import get_main_window_title
+from pxr import UsdGeom
+
+STAGE_TEMPLATE = "Primantics Empty"
+
+
+def _initialize_empty_stage(_root_path, context_name):
+    stage = omni.usd.get_context(context_name).get_stage()
+    UsdGeom.SetStageMetersPerUnit(stage, 1.0)
 
 DATA_PATH = Path(carb.tokens.get_tokens_interface().resolve(
     "${pmatx.setup}")
@@ -65,6 +73,11 @@ class CreateSetupExtension(omni.ext.IExt):
             return
 
         self._menu_layout = []
+        stage_templates.register_template(STAGE_TEMPLATE, _initialize_empty_stage)
+        # Existing profiles can retain the Composer template over the app defaults.
+        self._settings.set("/persistent/app/newStage/defaultTemplate", STAGE_TEMPLATE)
+        self._settings.set("/persistent/app/stage/defaultPrimName", "World")
+        self._settings.set("/persistent/exts/omni.kit.viewport.menubar.lighting/autoLightRig/enabled", True)
 
         telemetry_logger = logging.getLogger("idl.telemetry.opentelemetry")
         telemetry_logger.setLevel(logging.ERROR)
@@ -122,23 +135,6 @@ class CreateSetupExtension(omni.ext.IExt):
                 window_title.set_app_version(app_version)
             else:
                 window_title.set_app_version(app_version)
-
-        imgui_style_applied = False
-        try:
-            # using imgui directly to adjust some color and Variable
-            import omni.kit.imgui as _imgui
-            imgui = _imgui.acquire_imgui()
-            if imgui.is_valid():
-                imgui.push_style_color(_imgui.StyleColor.ScrollbarGrab, carb.Float4(0.4, 0.4, 0.4, 1))
-                imgui.push_style_color(_imgui.StyleColor.ScrollbarGrabHovered, carb.Float4(0.6, 0.6, 0.6, 1))
-                imgui.push_style_color(_imgui.StyleColor.ScrollbarGrabActive, carb.Float4(0.8, 0.8, 0.8, 1))
-                imgui.push_style_var_float(_imgui.StyleVar.DockSplitterSize, 2)
-                imgui_style_applied = True
-        except ImportError:
-            pass
-
-        if not imgui_style_applied:
-            carb.log_error("Style may not be as expected (carb.imgui was not valid)")
 
         layout_file = f"{DATA_PATH}/layouts/default.json"
 
@@ -379,6 +375,7 @@ class CreateSetupExtension(omni.ext.IExt):
 
     def on_shutdown(self):
         """Clean up the extension"""
+        stage_templates.unregister_template(STAGE_TEMPLATE)
         omni.kit.menu.utils.remove_layout(self._menu_layout)
         self._menu_layout = None
 
