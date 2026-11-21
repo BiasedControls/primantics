@@ -1,0 +1,51 @@
+#usda 1.0
+(
+    doc = "usdGenSchema authoring layer for {{schema_name}} (codeful resource plugin)."
+    subLayers = [
+        @usdGeom/schema.usda@
+    ]
+)
+
+over "GLOBAL" (
+    customData = {
+        string libraryName = "{{schema_name}}"
+        string libraryPath = "."
+        string libraryPrefix = "{{schema_prefix}}"
+    }
+) {
+}
+
+class TestBase "TestBase" (
+    inherits = </Xform>
+    doc = "ECA wireframe component base class"
+)
+{
+    string id = "" (
+        doc = "Unique Identifier for the component"
+    )
+    string name = "" (
+        doc = "Name of the wireframe component."
+    )
+    int number = 0 (
+        doc = "Number of the wireframe component"
+    )
+    string description = "" (
+        doc = "Description of the wireframe component"
+    )
+    string ProcessDescription = "" (
+        doc = "Process description for the wireframe component"
+    )
+    float TotalCost = 0.0 (
+        doc = "Total cost of the wireframe component"
+    )
+}
+
+class MyInheritsSchema "MyInheritsSchema" (
+     inherits = </TestBase>
+     doc = "ECA wireframe component for Zone class"
+)
+{
+    string inheritsType = "" (
+        doc = "This schema inherits the base one, and therefore gets all attributes from the base"
+    )
+}

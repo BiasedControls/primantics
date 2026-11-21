@@ -1,0 +1,12 @@
+
+[templates."basic_schema_extension"]
+class = "ExtensionTemplate"
+name = "Basic Schema Extension"
+url = "."
+subpath = "extensions/basic_schema/template"
+variables.extension_name = "my_company.my_python_extension"
+variables.extension_display_name = "My Schema Extension"
+variables.schema_name = "myTestSchema"
+variables.schema_python_module = "MyTestSchema"
+variables.schema_prefix = "MyTest"
+variables.version = "0.1.0"

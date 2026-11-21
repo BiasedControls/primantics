@@ -81,7 +81,6 @@ variables.extension_name = "my_company.my_pybind"
 variables.extension_display_name = "My Pybind11 Extension"
 variables.version = "0.1.0"
 
-
 [templates."kit_service_setup"]
 class = "SetupExtensionTemplate"
 name = "Service Setup"
