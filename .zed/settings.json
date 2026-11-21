@@ -1,0 +1,40 @@
+{
+  "file_types": {
+    "TOML": ["*.kit"]
+  },
+
+  "file_scan_exclusions": [
+    "**/.git/subtree-cache/**",
+    "**/node_modules/**",
+    "**/_compiler/**",
+    "..."
+  ],
+  "wrap_guides": [120],
+  "languages": {
+    "C++": {
+      "language_servers": ["clangd"]
+    },
+    "C": {
+      "language_servers": ["clangd"]
+    },
+    "TOML": {
+      "format_on_save": "off"
+    },
+    "Python": {
+      "language_servers": ["ty"],
+      "formatter": { "language_server": { "name": "ruff" } },
+      "code_actions_on_format": { "source.organizeImports.ruff": true }
+    }
+  },
+  "lsp": {
+    "ruff": {
+      "initialization_options": {
+        "settings": {
+          "configuration": {
+            "line-length": 120
+          }
+        }
+      }
+    }
+  }
+}

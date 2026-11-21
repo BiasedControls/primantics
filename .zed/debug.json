@@ -1,0 +1,19 @@
+[
+  {
+    "label": "Python: Remote Attach",
+    "adapter": "Debugpy",
+    "request": "attach",
+    "connect": {
+      "host": "127.0.0.1",
+      "port": 3000
+    },
+    "pathMappings": [
+      {
+        "localRoot": "$ZED_WORKTREE_ROOT",
+        "remoteRoot": "$ZED_WORKTREE_ROOT"
+      }
+    ],
+    "justMyCode": true,
+    "subProcess": true
+  }
+]

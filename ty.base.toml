@@ -1,0 +1,9 @@
+# Shared ty config (committed). Used by both VS Code and Zed via the generated ty.toml:
+# .zed/sync_extra_paths.ps1 (post-build) copies this file into ty.toml and appends the
+# build-generated [environment] table, so do NOT add an [environment] table here.
+
+# Type-check strictness: We should make it a task for someone to make this strict and resolve all errors
+[rules]
+all = "ignore"
+import-not-found = "error"
+unresolved-reference = "warn"

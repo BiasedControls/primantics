@@ -1,0 +1,16 @@
+[
+    // Imports the build-generated python.analysis.extraPaths from
+    // .vscode/settings.json into the gitignored ty.toml (used by Zed's ty).
+    {
+        "label": "sync vscode python extraPaths",
+        "command": "powershell",
+        "args": [
+            "-NoProfile",
+            "-ExecutionPolicy", "Bypass",
+            "-File", "$ZED_WORKTREE_ROOT/.zed/sync_extra_paths.ps1"
+        ],
+        "cwd": "$ZED_WORKTREE_ROOT",
+        "use_new_terminal": false,
+        "allow_concurrent_runs": false
+    }
+]
