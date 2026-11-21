@@ -8,9 +8,10 @@
 //
 #pragma once
 
+#include <carb/Interface.h>
+
 #include <pmatx/player/core/IPmatxPlayerCoreObjectInterface.h>
 
-#include <carb/Interface.h>
 
 namespace pmatx::player::core
 {

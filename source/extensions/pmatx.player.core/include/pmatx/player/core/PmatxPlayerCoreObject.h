@@ -8,11 +8,11 @@
 //
 #pragma once
 
-#include <pmatx/player/core/IPmatxPlayerCoreObjectInterface.h>
-
 #include <carb/ObjectUtils.h>
 
 #include <omni/String.h>
+#include <pmatx/player/core/IPmatxPlayerCoreObjectInterface.h>
+
 
 namespace pmatx::player::core
 {
@@ -30,8 +30,7 @@ public:
      *
      * @param id Id of the bound object.
      */
-    PmatxPlayerCoreObject(const char* id)
-        : m_id(id ? id : "")
+    PmatxPlayerCoreObject(const char* id) : m_id(id ? id : "")
     {
     }
 

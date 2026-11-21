@@ -12,13 +12,12 @@
 #include <carb/PluginUtils.h>
 
 #include <omni/ext/IExt.h>
-
 #include <pmatx/player/core/IPmatxPlayerCoreInterface.h>
 
 #include <unordered_map>
 
-const struct carb::PluginImplDesc pluginImplDesc = { "pmatx.player.core.plugin",
-                                                     "An example C++ extension.", "NVIDIA",
+
+const struct carb::PluginImplDesc pluginImplDesc = { "pmatx.player.core.plugin", "An example C++ extension.", "NVIDIA",
                                                      carb::PluginHotReload::eEnabled, "dev" };
 
 namespace pmatx::player::core

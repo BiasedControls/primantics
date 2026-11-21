@@ -9,10 +9,11 @@
 
 #include <carb/BindingsPythonUtils.h>
 
-#include <pmatx/player/core/PmatxPlayerCoreObject.h>
 #include <pmatx/player/core/IPmatxPlayerCoreInterface.h>
+#include <pmatx/player/core/PmatxPlayerCoreObject.h>
 
 #include <string>
+
 
 CARB_BINDINGS("pmatx.player.core.python")
 
@@ -49,10 +50,7 @@ public:
      * @param id Id of the bound object.
      */
     PythonPmatxPlayerCoreObject(const char* id)
-        : PmatxPlayerCoreObject(id)
-        , m_memberInt(0)
-        , m_memberBool(false)
-        , m_memberString()
+        : PmatxPlayerCoreObject(id), m_memberInt(0), m_memberBool(false), m_memberString()
     {
     }
 
@@ -100,8 +98,7 @@ private:
 // Define the pybind11 module using the same name specified in premake5.lua
 PYBIND11_MODULE(_pmatx_player_core_lib, m)
 {
-    using namespace pmatx::player::core
-;
+    using namespace pmatx::player::core;
 
     m.doc() = "pybind11 pmatx.player.core bindings";
 
@@ -123,7 +120,8 @@ PYBIND11_MODULE(_pmatx_player_core_lib, m)
                  object: The bound object to deregister.
              )",
              py::arg("object"))
-        .def("find_bound_object", &IPmatxPlayerCoreInterface::findPmatxPlayerCoreObject, py::return_value_policy::reference,
+        .def("find_bound_object", &IPmatxPlayerCoreInterface::findPmatxPlayerCoreObject,
+             py::return_value_policy::reference,
              R"(
              Find a bound object.
 
@@ -136,9 +134,10 @@ PYBIND11_MODULE(_pmatx_player_core_lib, m)
              py::arg("id"))
         /**/;
 
-    py::class_<IPmatxPlayerCoreObjectInterface, carb::ObjectPtr<IPmatxPlayerCoreObjectInterface>>(m, "IPmatxPlayerCoreObjectInterface")
+    py::class_<IPmatxPlayerCoreObjectInterface, carb::ObjectPtr<IPmatxPlayerCoreObjectInterface>>(
+        m, "IPmatxPlayerCoreObjectInterface")
         .def_property_readonly("id", &IPmatxPlayerCoreObjectInterface::getId, py::return_value_policy::reference,
-            R"(
+                               R"(
              Get the id of this bound object.
 
              Return:
@@ -146,7 +145,8 @@ PYBIND11_MODULE(_pmatx_player_core_lib, m)
              )")
         /**/;
 
-    py::class_<PythonPmatxPlayerCoreObject, IPmatxPlayerCoreObjectInterface, carb::ObjectPtr<PythonPmatxPlayerCoreObject>>(m, "PmatxPlayerCoreObject")
+    py::class_<PythonPmatxPlayerCoreObject, IPmatxPlayerCoreObjectInterface, carb::ObjectPtr<PythonPmatxPlayerCoreObject>>(
+        m, "PmatxPlayerCoreObject")
         .def(py::init([](const char* id) { return PythonPmatxPlayerCoreObject::create(id); }),
              R"(
              Create a bound object.
@@ -159,15 +159,16 @@ PYBIND11_MODULE(_pmatx_player_core_lib, m)
              )",
              py::arg("id"))
         .def_readwrite("property_int", &PythonPmatxPlayerCoreObject::m_memberInt,
-             R"(
+                       R"(
              Int property bound directly.
              )")
         .def_readwrite("property_bool", &PythonPmatxPlayerCoreObject::m_memberBool,
-             R"(
+                       R"(
              Bool property bound directly.
              )")
-        .def_property("property_string", &PythonPmatxPlayerCoreObject::getMemberString, &PythonPmatxPlayerCoreObject::setMemberString, py::return_value_policy::reference,
-             R"(
+        .def_property("property_string", &PythonPmatxPlayerCoreObject::getMemberString,
+                      &PythonPmatxPlayerCoreObject::setMemberString, py::return_value_policy::reference,
+                      R"(
              String property bound using accessors.
              )")
         .def("multiply_int_property", &PythonPmatxPlayerCoreObject::multiplyIntProperty,
@@ -185,7 +186,8 @@ PYBIND11_MODULE(_pmatx_player_core_lib, m)
              Return:
                  The toggled bool value.
              )")
-        .def("append_string_property", &PythonPmatxPlayerCoreObject::appendStringProperty, py::return_value_policy::reference,
+        .def("append_string_property", &PythonPmatxPlayerCoreObject::appendStringProperty,
+             py::return_value_policy::reference,
              R"(
              Bound fuction that accepts an argument and returns a value.
 

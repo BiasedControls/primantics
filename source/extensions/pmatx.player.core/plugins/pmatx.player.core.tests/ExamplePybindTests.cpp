@@ -7,12 +7,12 @@
 // license agreement from NVIDIA CORPORATION is strictly prohibited.
 //
 
+#include <carb/BindingsUtils.h>
+
+#include <doctest/doctest.h>
 #include <pmatx/player/core/IPmatxPlayerCoreInterface.h>
 #include <pmatx/player/core/PmatxPlayerCoreObject.h>
 
-#include <doctest/doctest.h>
-
-#include <carb/BindingsUtils.h>
 
 CARB_BINDINGS("pmatx.player.core.tests")
 
@@ -27,8 +27,7 @@ public:
         return carb::stealObject<IPmatxPlayerCoreObjectInterface>(new ExampleCppObject(id));
     }
 
-    ExampleCppObject(const char* id)
-        : PmatxPlayerCoreObject(id)
+    ExampleCppObject(const char* id) : PmatxPlayerCoreObject(id)
     {
     }
 };
@@ -39,8 +38,8 @@ public:
     static constexpr const char* k_registeredObjectId = "example_bound_object";
 
     ExamplePybindTestFixture()
-        : m_exampleBoundInterface(carb::getCachedInterface<pmatx::player::core::IPmatxPlayerCoreInterface>())
-        , m_PmatxPlayerCoreObject(ExampleCppObject::create(k_registeredObjectId))
+        : m_exampleBoundInterface(carb::getCachedInterface<pmatx::player::core::IPmatxPlayerCoreInterface>()),
+          m_PmatxPlayerCoreObject(ExampleCppObject::create(k_registeredObjectId))
     {
         m_exampleBoundInterface->registerPmatxPlayerCoreObject(m_PmatxPlayerCoreObject);
     }
@@ -70,8 +69,7 @@ private:
 
 TEST_SUITE("pmatx.player.core.tests")
 {
-    using namespace pmatx::player::core
-;
+    using namespace pmatx::player::core;
 
     TEST_CASE_FIXTURE(ExamplePybindTestFixture, "Get Example Bound Interface")
     {
@@ -87,14 +85,16 @@ TEST_SUITE("pmatx.player.core.tests")
     {
         SUBCASE("Registered")
         {
-            carb::ObjectPtr<IPmatxPlayerCoreObjectInterface> foundObject = getExampleBoundInterface()->findPmatxPlayerCoreObject(k_registeredObjectId);
+            carb::ObjectPtr<IPmatxPlayerCoreObjectInterface> foundObject =
+                getExampleBoundInterface()->findPmatxPlayerCoreObject(k_registeredObjectId);
             CHECK(foundObject.get() == getPmatxPlayerCoreObject().get());
             CHECK(foundObject.get() != nullptr);
         }
 
         SUBCASE("Unregistered")
         {
-            carb::ObjectPtr<IPmatxPlayerCoreObjectInterface> foundObject = getExampleBoundInterface()->findPmatxPlayerCoreObject("unregistered_object_id");
+            carb::ObjectPtr<IPmatxPlayerCoreObjectInterface> foundObject =
+                getExampleBoundInterface()->findPmatxPlayerCoreObject("unregistered_object_id");
             CHECK(foundObject.get() != getPmatxPlayerCoreObject().get());
             CHECK(foundObject.get() == nullptr);
         }
