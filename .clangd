@@ -1,3 +1,11 @@
 CompileFlags:
     CompilationDatabase: _build/windows-x86_64/release
     Remove: ["/C"]
+---
+If:
+    PathMatch: 'source/extensions/pmatx\.player\.core/include/.*\.h'
+CompileFlags:
+    # Header commands may be inferred from bindings or tests, not the USD plugin.
+    # The generated commands run from _compiler/vs2022/<target>.
+    Remove: ["/external:W*"]
+    Add: ["/external:W0", "/external:I../../../_build/target-deps/usd/release/include"]

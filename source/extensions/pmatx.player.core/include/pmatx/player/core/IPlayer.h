@@ -10,5 +10,6 @@ class IPlayer : IHealth
 {
 public:
     virtual IHealth* getHealthData() const;
+    virtual pxr::UsdPrim getPrim() const;
 };
 }
