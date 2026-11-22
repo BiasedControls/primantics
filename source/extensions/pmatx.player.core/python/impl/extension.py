@@ -9,23 +9,14 @@
 import omni.ext
 from .._pmatx_player_core_lib import *
 
-# Global public interface object.
-_bound_interface = None
-
-# Public API.
-def get_bound_interface() -> IPmatxPlayerCoreInterface:
-    return _bound_interface
-
 
 # Use the extension entry points to acquire and release the interface.
 class ExamplePybindExtension(omni.ext.IExt):
     def __init__(self):
         super().__init__()
 
-        global _bound_interface
-        _bound_interface = acquire_bound_interface()
+    def on_startup(self):
+        pass
 
     def on_shutdown(self):
-        global _bound_interface
-        release_bound_interface(_bound_interface)
-        _bound_interface = None
+        pass

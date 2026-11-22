@@ -8,5 +8,4 @@
 ##
 
 # Necessary so we can link to the Python source instead of copying it.
-__all__ = ['"PmatxPlayerCoreObject"', 'IPmatxPlayerCoreInterface', 'IPmatxPlayerCoreObjectInterface', 'acquire_bound_interface', 'release_bound_interface']
 from .impl import *

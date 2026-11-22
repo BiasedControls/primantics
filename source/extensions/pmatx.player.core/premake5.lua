@@ -12,6 +12,7 @@ repo_build.prebuild_link {
 project_ext_plugin(ext, "pmatx.player.core.plugin")
     add_files("include", "include/pmatx/player/core")
     add_files("source", "plugins/pmatx.player.core")
+    add_usd{"usdGeom", "usdPhysics"}
     includedirs { "include", "plugins/pmatx.player.core" }
 
 -- Build Python bindings that will be loaded by the extension.
