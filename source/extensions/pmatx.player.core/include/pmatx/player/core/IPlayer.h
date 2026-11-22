@@ -6,10 +6,12 @@
 namespace pmatx::player::core
 {
 
-class IPlayer : IHealth
+class IPlayer : public IHealth
 {
 public:
-    virtual IHealth* getHealthData() const;
-    virtual pxr::UsdPrim getPrim() const;
+    virtual pxr::UsdPrim getPrim() const = 0;
+    virtual void destroy() = 0;
+
+    // virtual void setWeapon()
 };
 }

@@ -8,7 +8,7 @@
 
 namespace pmatx::player::core
 {
-class HealthController : IHealth
+class HealthController : public IHealth
 {
 public:
     HealthController(const uint16_t maxHealth = 100);
