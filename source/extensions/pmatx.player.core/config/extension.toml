@@ -19,6 +19,7 @@ reloadable = false
 
 [dependencies]
 "omni.physx" = {}
+"omni.physx.cct" = {}
 
 # Define the Python modules that this extension provides.
 [[python.module]]

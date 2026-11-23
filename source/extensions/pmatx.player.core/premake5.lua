@@ -13,7 +13,11 @@ project_ext_plugin(ext, "pmatx.player.core.plugin")
     add_files("include", "include/pmatx/player/core")
     add_files("source", "plugins/pmatx.player.core")
     add_usd{"usdGeom", "usdPhysics"}
-    includedirs { "include", "plugins/pmatx.player.core" }
+    includedirs {
+        "include",
+        "plugins/pmatx.player.core",
+        "%{target_deps}/omni_physics/release/include"
+    }
 
 -- Build Python bindings that will be loaded by the extension.
 project_ext_bindings {
