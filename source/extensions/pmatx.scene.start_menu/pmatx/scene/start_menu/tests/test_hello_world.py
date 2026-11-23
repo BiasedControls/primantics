@@ -20,7 +20,7 @@ import omni.kit.ui_test as ui_test
 
 # Import extension python module we are testing with absolute import path,
 # as if we are external user (other extension)
-import pmatx.window.start_menu
+import pmatx.scene.start_menu
 
 
 # Having a test class dervived from omni.kit.test.AsyncTestCase declared on the
@@ -36,7 +36,7 @@ class Test(omni.kit.test.AsyncTestCase):
 
     # Actual test, notice it is an "async" function, so "await" can be used if needed
     async def test_hello_public_function(self):
-        result = pmatx.window.start_menu.some_public_function(4)
+        result = pmatx.scene.start_menu.some_public_function(4)
         self.assertEqual(result, 256)
 
     async def test_window_button(self):

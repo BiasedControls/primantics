@@ -23,13 +23,14 @@ repository = "https://github.com/NVIDIA-Omniverse/kit-app-template"  # URL of th
 
 [dependencies]
 "omni.kit.uiapp" = {}
-
+"omni.ui.scene" = {}
+"omni.kit.viewport.utility" = {}
 
 [settings]
 
 
-[[python.module]]  # Main python module this extension provides, it will be publicly available as "import pmatx.window.start_menu"
-name = "pmatx.window.start_menu"
+[[python.module]]  # Main python module this extension provides, it will be publicly available as "import pmatx.scene.start_menu"
+name = "pmatx.scene.start_menu"
 
 
 [documentation]
