@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="504" height="504" viewBox="0 0 504 504">
+  <title>Minion</title>
+  <polygon fill="#a21d32" points="8,174 66,204 66,271 4,283 33,238"/>
+  <polygon fill="#24292f" points="108,41 427,41 475,107 475,468 60,468 60,107"/>
+  <polygon fill="#dadddf" points="115,54 420,54 456,104 79,104"/>
+  <rect fill="#898e95" x="73" y="117" width="389" height="338"/>
+  <polygon fill="#d52743" points="66,177 267,195 469,177 469,284 407,320 330,325 267,293 204,325 127,320 66,284"/>
+  <g fill="#fff2cc">
+    <polygon points="96,207 235,235 217,270 174,285 116,268"/>
+    <polygon points="438,207 418,268 360,285 317,270 299,235"/>
+  </g>
+</svg>

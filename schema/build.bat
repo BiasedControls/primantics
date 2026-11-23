@@ -8,8 +8,7 @@ set CONFIG=Release
 set SCHEMA=all
 set DISCOVER=false
 set JOBS=0
-set USD_FLAVOR=usd-dev
-set DIRECTORIES_TO_CLEAN=_install _build\cmake _build\usd-deps _build\host-deps
+set DIRECTORIES_TO_CLEAN=_install _build\cmake
 
 :parseargs
 if "%~1"=="" goto :argsdone
@@ -77,10 +76,10 @@ if "%CLEAN%"=="true" (
 set "PY_ARGS=--config %CONFIG% --schema %SCHEMA% --jobs %JOBS%"
 if "%DISCOVER%"=="true" set "PY_ARGS=!PY_ARGS! --discover"
 
-REM Discovery only walks source/extensions/; skip the packman fetch.
-if not "%DISCOVER%"=="true" (
-    call "%PARENT%tools\packman\python.bat" scripts\setup.py --usd-flavor=%USD_FLAVOR% --config=%CONFIG%
-    if !errorlevel! neq 0 goto :Error
+if not "%DISCOVER%"=="true" if not exist "%PARENT%_build\target-deps\usd\release\pxrConfig.cmake" (
+    >&2 echo [build.bat] Missing _build\target-deps\usd\release\pxrConfig.cmake. Run repo.bat build from the repo root first.
+    popd
+    exit /b 1
 )
 
 REM Discover every schema.usda under source/extensions/ and build each in its

@@ -68,7 +68,7 @@ fetch.packman_target_files_to_pull = [
     "${root}/tools/deps/host-deps.packman.xml",
     "${root}/tools/deps/kit-sdk.packman.xml",
     "${root}/tools/deps/kit-sdk-deps.packman.xml",
-    "${root}/tools/deps/omni-physics.packman.xml",
+    "${root}/tools/deps/omni-physics.packman.xml"
 ]
 
 
